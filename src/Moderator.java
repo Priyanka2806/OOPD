@@ -83,6 +83,6 @@ public class Moderator extends Person{
 					break;
 			
 		}
-		in.close();
+		//in.close();
 	}
 }

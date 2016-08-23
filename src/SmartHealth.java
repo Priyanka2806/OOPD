@@ -210,26 +210,18 @@ public class SmartHealth {
 		int selection = in.nextInt();
 		in.nextLine();
 		loggedInUser.updateDetails(selection);
-		String op1="";
 		System.out.println("More Updations?? [y/n]");
-		while(in.hasNextLine())
-		{
-			op1 = in.nextLine();
-		}
+		String op1 = in.nextLine();
 		
 		//System.out.println(option1);
 		if(op1.equals("y") || op1.equals("Y"))
 		{
 			updateProfile(loggedInUser, string);
 		}
-		else if(op1.equals("n") || op1.equals("N"))
+		else
 		{
 			System.out.println("All updations made successfully!!");
 			userProfilePage(loggedInUser.username, string);
-		}
-		else
-		{
-			System.out.println(op1);
 		}
 		//in.close();
 	}
