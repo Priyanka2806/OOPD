@@ -5,6 +5,7 @@ import java.util.Iterator;
 public class SmartHealth {
 	
 	//Three lists maintained to store Users, Administrator, Moderators.
+	static Scanner in = new Scanner(System.in);
 	static ArrayList<User> userList = new ArrayList<User>();
 	static ArrayList<Moderator> modList = new ArrayList<Moderator>();
 	static ArrayList<Admin> adminList = new ArrayList<Admin>();
@@ -12,7 +13,7 @@ public class SmartHealth {
 	public static void main(String args[])
 	{
 		//To set user type for Users, according to date of registration.
-		Scanner in = new Scanner(System.in);
+		//Scanner in = new Scanner(System.in);
 		long currentTime = System.currentTimeMillis();
 		Iterator<User> iterator1 = userList.iterator();
 		int denominator = 1000*60*60*24;
@@ -45,13 +46,13 @@ public class SmartHealth {
 			case 3: System.out.println("Thank you!!");
 					break;
 		}
-		in.close();
+		//in.close();
 	}
 	
 	//User Login Page - Checks email id and password entered by the user and directs to the corresponding user's profile.
 	private static void userLogin() {
 		int flag = 0;
-		Scanner in = new Scanner(System.in);
+		//Scanner in = new Scanner(System.in);
 		System.out.println("Press 'Enter' to Login. Enter 1 to go back to previous Menu."); //Press 'Enter' if you want to enter credentials.
 		String choice = in.nextLine();
 		if(choice == "2")
@@ -106,12 +107,12 @@ public class SmartHealth {
 				userLogin();
 			}
 		}
-		in.close();
+		//in.close();
 	}
 	
 	//User Profile Page - Displays users details, and options for deleting or updating user profile. Arguement 'string' defines whether the person is a User, Moderator or Admin.
 	private static void userProfilePage(String username, String string) {
-		Scanner in = new Scanner(System.in);
+		//Scanner in = new Scanner(System.in);
 		System.out.printf("Welcome "+ username);
 		System.out.println();
 		System.out.println("Update Details? Enter 1");
@@ -174,12 +175,12 @@ public class SmartHealth {
 			case 3: main(null);
 					break;
 		}
-		in.close();
+		//in.close();
 	}
 	
 	//User's profile details are deleted from the list of registered users, and added to list of deleted  users, for record purpose.
 	private static void deleteProfile(Person userToBeDeleted, String string) {
-		Scanner in = new Scanner(System.in);
+		//Scanner in = new Scanner(System.in);
 		System.out.println("Are you sure you want to delete your Profile? [y/n]");
 		String ans = in.nextLine();
 		if(ans.equals("y") || ans.equals("Y")) //Confirms whether users wants to delete profile or not.
@@ -198,38 +199,45 @@ public class SmartHealth {
 		else
 			userProfilePage(userToBeDeleted.username, string);
 		
-		in.close();	
+		//in.close();	
 	}
 
 	//Displays various details of the logged in user, and provides option to update those details.
 	private static void updateProfile(Person loggedInUser, String string) {
-		Scanner in = new Scanner(System.in);
+		//Scanner input = new Scanner(System.in);
 		System.out.println("Your Profile Details are:-");
 		loggedInUser.displayDetails();
 		int selection = in.nextInt();
 		in.nextLine();
 		loggedInUser.updateDetails(selection);
+		String op1="";
+		System.out.println("More Updations?? [y/n]");
+		while(in.hasNextLine())
+		{
+			op1 = in.nextLine();
+		}
 		
-		System.out.println("More Updations?? Enter 1");
-		System.out.println("Else Enter 2");//Press 2 if no more updations.
-		int option1 = in.nextInt();
-		System.out.println(option1);
-		if(option1 == 1)
+		//System.out.println(option1);
+		if(op1.equals("y") || op1.equals("Y"))
 		{
 			updateProfile(loggedInUser, string);
 		}
-		else if(option1 == 2)
+		else if(op1.equals("n") || op1.equals("N"))
 		{
 			System.out.println("All updations made successfully!!");
 			userProfilePage(loggedInUser.username, string);
 		}
-		in.close();
+		else
+		{
+			System.out.println(op1);
+		}
+		//in.close();
 	}
 
 	//For registering a Person
 	public static void createProfile()
 	{
-		Scanner in = new Scanner(System.in);
+		//Scanner in = new Scanner(System.in);
 		
 		int temp = 0;
 		String c;
@@ -328,6 +336,6 @@ public class SmartHealth {
 			userLogin();
 		else if(op == 2)
 			main(null);
-		in.close();
+		//in.close();
 	}
 }

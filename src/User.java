@@ -30,6 +30,7 @@ public class User extends Person {
 		System.out.print("\nAddress - " + this.address + "  ----(Press 7 to update)");
 		System.out.print("\nAbout Me - " + this.aboutMe + "  ----(Press 8 to update)");
 		System.out.print("\nKarma Score - " + this.karma + "  ----(Cannot be updated)");
+		//System.out.print("Enter 9 to go back to your profile.");
 	}
 	
 	@Override
@@ -69,9 +70,11 @@ public class User extends Person {
 			case 8: System.out.println("Update About Me: ");
 					this.aboutMe = in.nextLine();
 					break;
+					
+			//case 9: userProfilePage(this.username, "user");
 			
 		}
-		in.close();
+		//in.close();
 	}
 	
 
