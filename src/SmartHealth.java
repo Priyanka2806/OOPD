@@ -6,6 +6,7 @@ public class SmartHealth {
 	
 	//Three lists maintained to store Users, Administrator, Moderators.
 	static Scanner in = new Scanner(System.in);
+	static ArrayList<String> allUsernames = new ArrayList<String>();
 	static ArrayList<User> userList = new ArrayList<User>();
 	static ArrayList<Moderator> modList = new ArrayList<Moderator>();
 	static ArrayList<Admin> adminList = new ArrayList<Admin>();
@@ -45,6 +46,8 @@ public class SmartHealth {
 					
 			case 3: System.out.println("Thank you!!");
 					break;
+			
+			default: System.out.println("Invalid Selection");
 		}
 		//in.close();
 	}
@@ -174,6 +177,8 @@ public class SmartHealth {
 						
 			case 3: main(null);
 					break;
+					
+			default: System.out.println("Invalid Selection");
 		}
 		//in.close();
 	}
@@ -218,11 +223,13 @@ public class SmartHealth {
 		{
 			updateProfile(loggedInUser, string);
 		}
-		else
+		else if(op1.equals("n") || op1.equals("N"))
 		{
 			System.out.println("All updations made successfully!!");
 			userProfilePage(loggedInUser.username, string);
 		}
+		else
+			System.out.println("Invalid Selection");
 		//in.close();
 	}
 
@@ -230,8 +237,6 @@ public class SmartHealth {
 	public static void createProfile()
 	{
 		//Scanner in = new Scanner(System.in);
-		
-		int temp = 0;
 		String c;
 		
 		System.out.println("Enter the following information.");
@@ -242,39 +247,26 @@ public class SmartHealth {
 		
 		System.out.println("Username: ");
 		String uName = in.nextLine();
-		while(uName.length() > 20){
-			System.out.println("Username cannot be longer than 20 characters. Re-enter Username.");
-			uName = in.nextLine();
-		} //To check that Username is not greater than 20 characters.
-	
-		while(temp == 1)
+		while(validateUsername(uName) == false)
 		{
-			Iterator<User> iterator3 = userList.iterator();
-			while(iterator3.hasNext()){
-				User registeredUsers = iterator3.next();
-				if(registeredUsers.username.equals(uName)){
-					temp = 1;
-					System.out.println("This username is already taken. Try some other Username.");
-					uName = in.nextLine();
-					break;
-				}
-			}
-		}//To check that Username is unique.
-	 
+			System.out.println("Enter a valid Username: ");
+			uName = in.nextLine();
+		}
+		allUsernames.add(uName);
 		System.out.println("Primary Email id: ");
 		String pEmail = in.nextLine();
-		while(!(pEmail.contains("@")) || !(pEmail.contains(".com")))
+		while(!validateMailId(pEmail))
 		{
-			System.out.println("Enter a valid Email Id");
+			System.out.println("Enter a valid Email Id: ");
 			pEmail = in.nextLine();
-		}//To check format of the email id.
+		}
 		System.out.println("Secondary Email id: ");
 		String sEmail = in.nextLine();
-		while(!(sEmail.contains("@")) || !(sEmail.contains(".com")))
+		while(!validateMailId(sEmail))
 		{
 			System.out.println("Enter a valid Email Id");
 			sEmail = in.nextLine();
-		}//To check format of the email id.
+		}
 		System.out.println("Password: ");
 		String password = in.nextLine();
 		System.out.println("First Name: ");
@@ -305,8 +297,20 @@ public class SmartHealth {
 			String usrType = "mod";
 			System.out.println("Enter the contact No.: ");
 			String contactNo = in.nextLine();
+			while(!validateContactNo(contactNo))
+			{
+				System.out.println("Enter a mobile no with 10 digits!");
+				contactNo = in.nextLine();
+			}
 			System.out.println("Enter the qualification details: ");
+			System.out.println("Qualifications - [PhD, MTech, BTech, MBBS, MD]");
+			System.out.println("Other than the list, then 'N/A'");
 			String qualificatn = in.nextLine();
+			while(!validateQualification(qualificatn))
+			{
+				System.out.println("Enter valid qualification: ");
+				qualificatn = in.nextLine();	
+			}
 			Moderator mod = new Moderator(uName, pEmail, sEmail, password, fName, lName, address, aboutMe, photo, regTime, usrType, contactNo, qualificatn);
 			modList.add(mod);
 			System.out.println("Moderator Added Successfully!!");
@@ -316,6 +320,12 @@ public class SmartHealth {
 			String usrType = "admin";
 			System.out.println("Enter Contact No.: ");
 			String contactNo = in.nextLine();
+			while(!validateContactNo(contactNo))
+			{
+				System.out.println("Enter a mobile no with 10 digits!");
+				contactNo = in.nextLine();
+			}
+			
 			Admin admin = new Admin(uName, pEmail, sEmail, password, fName, lName, address, aboutMe, photo, regTime, usrType, contactNo);
 			adminList.add(admin);
 			System.out.println("Admin Added Successfully!!");
@@ -330,4 +340,58 @@ public class SmartHealth {
 			main(null);
 		//in.close();
 	}
+	
+	//To check format of the email id.
+	public static boolean validateMailId(String email)
+	{
+		if(email.contains("@"))
+		{
+			if(email.endsWith(".com"))
+				return true;
+			else
+				return false;
+		}
+		return false;		
+	}
+	
+	//To validate username that it should be smaller than 20 characters and unique.
+	public static boolean validateUsername(String uName)
+	{
+		if(uName.length() < 20) {
+			if(userList.isEmpty())
+				return true;
+			else{
+				for(String allRegisteredUsers : allUsernames){
+					if(allRegisteredUsers.equals(uName))
+						System.out.println("This username is already taken. Try some other Username.");
+					else{
+						System.out.println("check2");
+						return true;
+					}
+				}	
+			}
+		}
+		else
+			System.out.println("Username cannot be greater than 20 characters.");
+			
+		return false;
+	}
+	
+	public static boolean validateContactNo(String contactNo)
+	{
+		if(contactNo.length() == 10)
+			return true;
+		else
+			return false;
+	}
+	
+	public static boolean validateQualification(String qualificatn)
+	{
+		if(qualificatn.equalsIgnoreCase("phd") || qualificatn.equalsIgnoreCase("mtech") || qualificatn.equalsIgnoreCase("btech")|| qualificatn.equalsIgnoreCase("mbbs") || qualificatn.equalsIgnoreCase("md"))
+			return true;
+		else
+			return false;
+	}
+	
 }
+
