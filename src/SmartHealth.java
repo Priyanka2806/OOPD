@@ -53,7 +53,11 @@ public class SmartHealth {
 		int flag = 0;
 		Scanner in = new Scanner(System.in);
 
+<<<<<<< HEAD
 		System.out.println("Enter 1 to Login. Enter 2 to go back to previous Menu."); //Press 'Enter' if you want to enter credentials.
+=======
+		System.out.println("Press 'Enter' to Login. Enter 1 to go back to previous Menu."); //Press 'Enter' if you want to enter credentials.
+>>>>>>> 01d53b00f6b20472aabd89fd6384d4a5d4d17598
 		String choice = in.nextLine();
 		if(choice == "2")
 			main(null);
@@ -206,63 +210,20 @@ public class SmartHealth {
 	private static void updateProfile(Person loggedInUser, String string) {
 		Scanner in = new Scanner(System.in);
 		System.out.println("Your Profile Details are:-");
-		System.out.print("\nUsername - " + loggedInUser.username + "  ----(Press 1 to update)");
-		System.out.print("\nPrimary Email ID - " + loggedInUser.primaryEmail + "  ----(Press 2 to update)");
-		System.out.print("\nSecondary Email ID - " + loggedInUser.secondaryEmail + "  ----(Press 3 to update)");
-		System.out.print("\nPassword - " + loggedInUser.password + "  ----(Press 4 to update)");
-		System.out.print("\nFirst Name - " + loggedInUser.firstName + "  ----(Press 5 to update)");
-		System.out.print("\nLast Name - " + loggedInUser.lastName + "  ----(Press 6 to update)");
-		System.out.print("\nAddress - " + loggedInUser.address + "  ----(Press 7 to update)");
-		System.out.print("\nAbout Me - " + loggedInUser.aboutMe + "  ----(Press 8 to update)");
-		
+		loggedInUser.displayDetails();
 		int selection = in.nextInt();
 		in.nextLine();
-		switch(selection)
-		{
-			case 1: System.out.println("Enter new Username: ");
-					loggedInUser.username = in.nextLine();
-					break;
-					
-			case 2: System.out.println("Enter new Primary Email ID: ");
-					loggedInUser.primaryEmail = in.nextLine();
-					break;
-			
-			case 3: System.out.println("Enter new Secondary Email ID: ");
-					loggedInUser.secondaryEmail = in.nextLine();
-					break;
-			
-			case 4: System.out.println("Enter new Password: ");
-					loggedInUser.password = in.nextLine();
-					break;
-					
-			case 5: System.out.println("Enter new First Name: ");
-					loggedInUser.firstName = in.nextLine();
-					break;
-			
-			case 6: System.out.println("Enter new Last Name: ");
-					loggedInUser.lastName = in.nextLine();
-					break;
-			
-			case 7: System.out.println("Enter new Postal Address: ");
-					loggedInUser.address = in.nextLine();
-					break;
-			
-			case 8: System.out.println("Update About Me: ");
-					loggedInUser.aboutMe = in.nextLine();
-					break;
-			
-		}
-		//personList.add(loggedInUser);
-		//Yahan prob aari hai.. cuz Idon't know how to update in particular list----
+		loggedInUser.updateDetails(selection);
 		
-		
-		System.out.println("More Updations?? Enter 1. Otherwise, press enter!"); //Press 'Enter' if no more updations.
-		String ch = in.nextLine();
-		if(ch == "1")
+		System.out.println("More Updations?? Enter 1");
+		System.out.println("Else Enter 2");//Press 2 if no more updations.
+		int option1 = in.nextInt();
+		System.out.println(option1);
+		if(option1 == 1)
 		{
 			updateProfile(loggedInUser, string);
 		}
-		else
+		else if(option1 == 2)
 		{
 			System.out.println("All updations made successfully!!");
 			userProfilePage(loggedInUser.username, string);
@@ -284,179 +245,87 @@ public class SmartHealth {
 		System.out.println("Admin?? Enter 'A'");
 		c = in.nextLine();
 		
-		
-		if(c.equals("U")){
-			User user = new User();
-			System.out.println("Username: ");
-			user.username = in.nextLine();
-			while(user.username.length() > 20){
-				System.out.println("Username cannot be longer than 20 characters. Re-enter Username.");
-				user.username = in.nextLine();
-			} //To check that Username is not greater than 20 characters.
-		
-			while(temp == 1)
-			{
-				Iterator<User> iterator3 = userList.iterator();
-				while(iterator3.hasNext()){
-					User registeredUsers = iterator3.next();
-					if(registeredUsers.username.equals(user.username)){
-						temp = 1;
-						System.out.println("This username is already taken. Try some other Username.");
-						user.username = in.nextLine();
-						break;
-					}
+		System.out.println("Username: ");
+		String uName = in.nextLine();
+		while(uName.length() > 20){
+			System.out.println("Username cannot be longer than 20 characters. Re-enter Username.");
+			uName = in.nextLine();
+		} //To check that Username is not greater than 20 characters.
+	
+		while(temp == 1)
+		{
+			Iterator<User> iterator3 = userList.iterator();
+			while(iterator3.hasNext()){
+				User registeredUsers = iterator3.next();
+				if(registeredUsers.username.equals(uName)){
+					temp = 1;
+					System.out.println("This username is already taken. Try some other Username.");
+					uName = in.nextLine();
+					break;
 				}
-			}//To check that Username is unique.
-		 
-			System.out.println("Primary Email id: ");
-			user.primaryEmail = in.nextLine();
-			while(!(user.primaryEmail.contains("@")) || !(user.primaryEmail.contains(".com")))
-			{
-				System.out.println("Enter a valid Email Id");
-				user.primaryEmail = in.nextLine();
-			}//To check format of the email id.
-			System.out.println("Secondary Email id: ");
-			user.secondaryEmail = in.nextLine();
-			while(!(user.secondaryEmail.contains("@")) || !(user.secondaryEmail.contains(".com")))
-			{
-				System.out.println("Enter a valid Email Id");
-				user.secondaryEmail = in.nextLine();
-			}//To check format of the email id.
-			System.out.println("Password: ");
-			user.password = in.nextLine();
-			System.out.println("Postal address: ");
-			user.address = in.nextLine();
-			System.out.println("About Me: ");
-			user.aboutMe = in.nextLine();
-			user.regTime = System.currentTimeMillis();
-			for(int i=0;i<3;i++)
-			{
-				System.out.println("Enter URL for photo " + (i+1) + ": ");
-				user.photoURL[i] = in.nextLine();
 			}
-			user.userType = "new";
-			user.karma = 0;
+		}//To check that Username is unique.
+	 
+		System.out.println("Primary Email id: ");
+		String pEmail = in.nextLine();
+		while(!(pEmail.contains("@")) || !(pEmail.contains(".com")))
+		{
+			System.out.println("Enter a valid Email Id");
+			pEmail = in.nextLine();
+		}//To check format of the email id.
+		System.out.println("Secondary Email id: ");
+		String sEmail = in.nextLine();
+		while(!(sEmail.contains("@")) || !(sEmail.contains(".com")))
+		{
+			System.out.println("Enter a valid Email Id");
+			sEmail = in.nextLine();
+		}//To check format of the email id.
+		System.out.println("Password: ");
+		String password = in.nextLine();
+		System.out.println("First Name: ");
+		String fName = in.nextLine();
+		System.out.println("Last Name: ");
+		String lName = in.nextLine();
+		System.out.println("Postal address: ");
+		String address = in.nextLine();
+		System.out.println("About Me: ");
+		String aboutMe = in.nextLine();
+		long regTime = System.currentTimeMillis();
+		String[] photo = new String[3];
+		for(int i=0;i<3;i++)
+		{
+			System.out.println("Enter URL for photo " + (i+1) + ": ");
+			photo[i] = in.nextLine();
+		}
+
+		if(c.equals("U") || c.equals("u")){
+			String usrType = "new";
+			int karma = 0;
+			User user = new User(uName, pEmail, sEmail, password, fName, lName, address, aboutMe, photo, regTime, usrType, karma);
 			userList.add(user);
-			
 			System.out.println("User Added Successfully!!");
 		}
 		
-		else if(c.equals("M")){
-			Moderator mod = new Moderator();
-			System.out.println("Username: ");
-			mod.username = in.nextLine();
-			while(mod.username.length() > 20){
-				System.out.println("Username cannot be longer than 20 characters. Re-enter Username.");
-				mod.username = in.nextLine();
-			}
-		
-			while(temp == 1)
-			{
-				Iterator<Moderator> iterator3 = modList.iterator();
-				while(iterator3.hasNext()){
-					Moderator registeredUsers = iterator3.next();
-					if(registeredUsers.username.equals(mod.username)){
-						temp = 1;
-						System.out.println("This username is already taken. Try some other Username.");
-						mod.username = in.nextLine();
-						break;
-					}
-				}
-			}
-		 
-			System.out.println("Primary Email id: ");
-			mod.primaryEmail = in.nextLine();
-			while(!(mod.primaryEmail.contains("@")) || !(mod.primaryEmail.contains(".com")))
-			{
-				System.out.println("Enter a valid Email Id");
-				mod.primaryEmail = in.nextLine();
-			}
-			System.out.println("Secondary Email id: ");
-			mod.secondaryEmail = in.nextLine();
-			while(!(mod.secondaryEmail.contains("@")) || !(mod.secondaryEmail.contains(".com")))
-			{
-				System.out.println("Enter a valid Email Id");
-				mod.secondaryEmail = in.nextLine();
-			}
-			System.out.println("Password: ");
-			mod.password = in.nextLine();
-			System.out.println("Postal address: ");
-			mod.address = in.nextLine();
-			System.out.println("About Me: ");
-			mod.aboutMe = in.nextLine();
-			mod.regTime = System.currentTimeMillis();
-			for(int i=0;i<3;i++)
-			{
-				System.out.println("Enter URL for photo " + (i+1) + ": ");
-				mod.photoURL[i] = in.nextLine();
-			}
-			mod.userType = "mod";
+		else if(c.equals("M") || c.equals("m")){
+			String usrType = "mod";
 			System.out.println("Enter the contact No.: ");
-			mod.contactNo = in.nextLine();
+			String contactNo = in.nextLine();
 			System.out.println("Enter the qualification details: ");
-			mod.qualification = in.nextLine();
+			String qualificatn = in.nextLine();
+			Moderator mod = new Moderator(uName, pEmail, sEmail, password, fName, lName, address, aboutMe, photo, regTime, usrType, contactNo, qualificatn);
 			modList.add(mod);
-			
 			System.out.println("Moderator Added Successfully!!");
 		}
 		
-		else if(c.equals("A")){
-			Admin admin = new Admin();
-			System.out.println("Username: ");
-			admin.username = in.nextLine();
-			while(admin.username.length() > 20){
-				System.out.println("Username cannot be longer than 20 characters. Re-enter Username.");
-				admin.username = in.nextLine();
-			}
-		
-			while(temp == 1)
-			{
-				Iterator<Admin> iterator3 = adminList.iterator();
-				while(iterator3.hasNext()){
-					Admin registeredUsers = iterator3.next();
-					if(registeredUsers.username.equals(admin.username)){
-						temp = 1;
-						System.out.println("This username is already taken. Try some other Username.");
-						admin.username = in.nextLine();
-						break;
-					}
-				}
-			}
-		 
-			System.out.println("Primary Email id: ");
-			admin.primaryEmail = in.nextLine();
-			while(!(admin.primaryEmail.contains("@")) || !(admin.primaryEmail.contains(".com")))
-			{
-				System.out.println("Enter a valid Email Id");
-				admin.primaryEmail = in.nextLine();
-			}
-			System.out.println("Secondary Email id: ");
-			admin.secondaryEmail = in.nextLine();
-			while(!(admin.secondaryEmail.contains("@")) || !(admin.secondaryEmail.contains(".com")))
-			{
-				System.out.println("Enter a valid Email Id");
-				admin.secondaryEmail = in.nextLine();
-			}
-			System.out.println("Password: ");
-			admin.password = in.nextLine();
-			System.out.println("Postal address: ");
-			admin.address = in.nextLine();
-			System.out.println("About Me: ");
-			admin.aboutMe = in.nextLine();
-			admin.regTime = System.currentTimeMillis();
-			for(int i=0;i<3;i++)
-			{
-				System.out.println("Enter URL for photo " + (i+1) + ": ");
-				admin.photoURL[i] = in.nextLine();
-			}
-			admin.userType = "admin";
+		else if(c.equals("A") || c.equals("a")){
+			String usrType = "admin";
 			System.out.println("Enter Contact No.: ");
-			admin.contactNo = in.nextLine();
+			String contactNo = in.nextLine();
+			Admin admin = new Admin(uName, pEmail, sEmail, password, fName, lName, address, aboutMe, photo, regTime, usrType, contactNo);
 			adminList.add(admin);
 			System.out.println("Admin Added Successfully!!");
 		}
-		
-		
+
 		System.out.println("Enter 1 to Login");
 		System.out.println("Enter 2 to go back to Menu");
 		int op = in.nextInt();
