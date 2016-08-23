@@ -52,12 +52,7 @@ public class SmartHealth {
 	private static void userLogin() {
 		int flag = 0;
 		Scanner in = new Scanner(System.in);
-
-<<<<<<< HEAD
-		System.out.println("Enter 1 to Login. Enter 2 to go back to previous Menu."); //Press 'Enter' if you want to enter credentials.
-=======
 		System.out.println("Press 'Enter' to Login. Enter 1 to go back to previous Menu."); //Press 'Enter' if you want to enter credentials.
->>>>>>> 01d53b00f6b20472aabd89fd6384d4a5d4d17598
 		String choice = in.nextLine();
 		if(choice == "2")
 			main(null);
