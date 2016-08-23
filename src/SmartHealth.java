@@ -4,14 +4,14 @@ import java.util.Iterator;
 
 public class SmartHealth {
 	
-	//Three lists maintained to store Users, Admin, Moderators.
+	//Three lists maintained to store Users, Administrator, Moderators.
 	static ArrayList<User> userList = new ArrayList<User>();
 	static ArrayList<Moderator> modList = new ArrayList<Moderator>();
 	static ArrayList<Admin> adminList = new ArrayList<Admin>();
 	static ArrayList<Person> deletedPersonList = new ArrayList<Person>(); //List to keep record of the users who have deleted their profile.
 	public static void main(String args[])
 	{
-		//To set usertype for Users, according to date of registration.
+		//To set user type for Users, according to date of registration.
 		Scanner in = new Scanner(System.in);
 		long currentTime = System.currentTimeMillis();
 		Iterator<User> iterator1 = userList.iterator();
@@ -19,7 +19,7 @@ public class SmartHealth {
 		 while(iterator1.hasNext()) {
 			 Person userTime = iterator1.next();
 			 long result=(currentTime - userTime.regTime)/denominator;
-			 if(result > 30 && result < 366)
+			 if(result > 30 && result < 365)
 			 {
 				 userTime.userType = "middle";
 			 }
@@ -53,9 +53,9 @@ public class SmartHealth {
 		int flag = 0;
 		Scanner in = new Scanner(System.in);
 
-		System.out.println("Enter Credentials to Login. Enter 1 to go back to previous Menu."); //Press 'Enter' if you want to enter credentials.
+		System.out.println("Enter 1 to Login. Enter 2 to go back to previous Menu."); //Press 'Enter' if you want to enter credentials.
 		String choice = in.nextLine();
-		if(choice == "1")
+		if(choice == "2")
 			main(null);
 		else{
 			System.out.println("Email Id: ");
@@ -63,16 +63,16 @@ public class SmartHealth {
 			System.out.println("Password: ");
 			String password = in.nextLine();
 			Iterator<User> iterator2 = userList.iterator();
+			//First checks the user list for the email id and password. If it matches, flag is made 1 and user account is opened.
 			while(iterator2.hasNext()) {
 				User prsn = iterator2.next();
-				if(prsn.primaryEmail.equals(loginId)){
-					if(prsn.password.equals(password)){
+				if(prsn.primaryEmail.equals(loginId) && prsn.password.equals(password)){
 						flag = 1;
 						userProfilePage(prsn.username, "U");
-						break;
-					}	 
+						break; 
 				} 
 			}
+			//If not found in the User list, checking the Moderator list. If it matches, flag is made 1 and moderator account is opened.
 			if(flag == 0)
 			{
 				Iterator<Moderator> iterator3 = modList.iterator();
@@ -87,7 +87,7 @@ public class SmartHealth {
 					} 
 				}
 			}
-			
+			//If not found in the Moderator list, checking the Administrator list. If it matches, flag is made 1 and administrator account is opened.
 			if(flag == 0){
 				Iterator<Admin> iterator4 = adminList.iterator();
 				while(iterator4.hasNext()) {
@@ -101,8 +101,9 @@ public class SmartHealth {
 					}	 
 				} 
 			}
+			//If not found in any of the lists, the person has entered wrong email id or password.
 			if(flag==0){
-				System.out.println("Invalid Login ID or Password!!");
+				System.out.println("Invalid Email ID or Password!!");
 				userLogin();
 			}
 		}
@@ -255,7 +256,7 @@ public class SmartHealth {
 		//Yahan prob aari hai.. cuz Idon't know how to update in particular list----
 		
 		
-		System.out.println("More Updations?? Enter 1"); //Press 'Enter' if no more updations.
+		System.out.println("More Updations?? Enter 1. Otherwise, press enter!"); //Press 'Enter' if no more updations.
 		String ch = in.nextLine();
 		if(ch == "1")
 		{
