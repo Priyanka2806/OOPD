@@ -56,9 +56,9 @@ public class SmartHealth {
 	private static void userLogin() {
 		int flag = 0;
 		//Scanner in = new Scanner(System.in);
-		System.out.println("Press 'Enter' to Login. Enter 1 to go back to previous Menu."); //Press 'Enter' if you want to enter credentials.
+		System.out.println("Press 2 to Login. Enter 1 to go back to previous Menu."); //Press 'Enter' if you want to enter credentials.
 		String choice = in.nextLine();
-		if(choice == "2")
+		if(choice == "1")
 			main(null);
 		else{
 			System.out.println("Email Id: ");
@@ -113,7 +113,7 @@ public class SmartHealth {
 		//in.close();
 	}
 	
-	//User Profile Page - Displays users details, and options for deleting or updating user profile. Arguement 'string' defines whether the person is a User, Moderator or Admin.
+	//User Profile Page - Displays users details, and options for deleting or updating user profile. Argument 'string' defines whether the person is a User, Moderator or Admin.
 	private static void userProfilePage(String username, String string) {
 		//Scanner in = new Scanner(System.in);
 		System.out.printf("Welcome "+ username);
@@ -245,7 +245,7 @@ public class SmartHealth {
 		System.out.println("Admin?? Enter 'A'");
 		c = in.nextLine();
 		
-		System.out.println("Username: ");
+		System.out.println("*Username: ");
 		String uName = in.nextLine();
 		while(validateUsername(uName) == false)
 		{
@@ -253,26 +253,41 @@ public class SmartHealth {
 			uName = in.nextLine();
 		}
 		allUsernames.add(uName);
-		System.out.println("Primary Email id: ");
+		System.out.println("*Primary Email id: ");
 		String pEmail = in.nextLine();
 		while(!validateMailId(pEmail))
 		{
 			System.out.println("Enter a valid Email Id: ");
 			pEmail = in.nextLine();
 		}
-		System.out.println("Secondary Email id: ");
+		System.out.println("*Secondary Email id: ");
 		String sEmail = in.nextLine();
 		while(!validateMailId(sEmail))
 		{
 			System.out.println("Enter a valid Email Id");
 			sEmail = in.nextLine();
 		}
-		System.out.println("Password: ");
+		System.out.println("*Password: ");
 		String password = in.nextLine();
-		System.out.println("First Name: ");
+		while(!validateEmpty(password))
+		{
+			System.out.println("Enter a valid password");
+			password = in.nextLine();
+		}
+		System.out.println("*First Name: ");
 		String fName = in.nextLine();
-		System.out.println("Last Name: ");
+		while(!validateEmpty(fName))
+		{
+			System.out.println("First name field cannot be left blank!");
+			fName = in.nextLine();
+		}
+		System.out.println("*Last Name: ");
 		String lName = in.nextLine();
+		while(!validateEmpty(lName))
+		{
+			System.out.println("Last name field cannot be left blank!");
+			lName = in.nextLine();
+		}
 		System.out.println("Postal address: ");
 		String address = in.nextLine();
 		System.out.println("About Me: ");
@@ -302,7 +317,7 @@ public class SmartHealth {
 				System.out.println("Enter a mobile no with 10 digits!");
 				contactNo = in.nextLine();
 			}
-			System.out.println("Enter the qualification details: ");
+			System.out.println("*Enter the qualification details: ");
 			System.out.println("Qualifications - [PhD, MTech, BTech, MBBS, MD]");
 			System.out.println("Other than the list, then 'N/A'");
 			String qualificatn = in.nextLine();
@@ -318,7 +333,7 @@ public class SmartHealth {
 		
 		else if(c.equals("A") || c.equals("a")){
 			String usrType = "admin";
-			System.out.println("Enter Contact No.: ");
+			System.out.println("*Enter Contact No.: ");
 			String contactNo = in.nextLine();
 			while(!validateContactNo(contactNo))
 			{
@@ -364,8 +379,8 @@ public class SmartHealth {
 				for(String allRegisteredUsers : allUsernames){
 					if(allRegisteredUsers.equals(uName))
 						System.out.println("This username is already taken. Try some other Username.");
-					else{
-						System.out.println("check2");
+					else
+					{
 						return true;
 					}
 				}	
@@ -375,6 +390,14 @@ public class SmartHealth {
 			System.out.println("Username cannot be greater than 20 characters.");
 			
 		return false;
+	}
+	
+	public static boolean validateEmpty(String name)
+	{
+		if(name.length() > 0)
+			return true;
+		else
+			return false;
 	}
 	
 	public static boolean validateContactNo(String contactNo)
